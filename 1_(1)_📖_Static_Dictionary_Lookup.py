@@ -4,8 +4,50 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-st.title("📖 Dictionary Lookup Demo")
+st.logo("log_wide_crop.png", size="large")
+
+st.set_page_config(
+    page_title="Static Dictionary Lookup",
+    page_icon="📖",
+)
+
+st.title("📖 Static Dictionary Lookup")
 st.subheader("*Linear vs. Logarithmic Time*")
+
+st.markdown(
+    """
+        <style>
+            .stAppHeader {
+                    background-color: rgba(255, 255, 255, 0.0);  /* Transparent background */
+                    visibility: visible;  /* Ensure the header is visible */
+            }
+
+            .block-container {
+                    padding-top: 2rem;
+                    padding-bottom: 0rem;
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+            }
+  div[data-testid="stSidebarHeader"] > img, div[data-testid="collapsedControl"] > img {
+      height: 3rem;
+      width: auto;
+  }
+  
+  div[data-testid="stSidebarHeader"], div[data-testid="stSidebarHeader"] > *,
+  div[data-testid="collapsedControl"], div[data-testid="collapsedControl"] > * {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .small-font {
+    font-size:8pt !important;
+}
+</style>
+        """,
+    unsafe_allow_html=True,
+)
+
+st.markdown("Here we load an old version of Webster's dictionary, containing $N = 102105$ words, to introduce the differences between linear and binary search. Once you've gotten a feel for this, open the **'How Does It Scale?'** demo in the left sidebar, where you'll see the full benefit of binary over linear search!")
 
 if 'queries' not in st.session_state:
     st.session_state['queries'] = []
@@ -21,10 +63,10 @@ def load_data():
     return dict_entries
 
 # Create a text element and let the reader know the data is loading.
-data_load_state = st.text('Loading data (102118 words)...')
+data_load_state = st.text('Loading data (102105 words)...')
 dict_entries = load_data()
 # Notify the reader that the data was successfully loaded.
-data_load_state.text('Loading data (102118 words)... done!')
+data_load_state.text('Loading data (102105 words)... done!')
 
 # st.text(','.join(dict_entries[:10]))
 
@@ -36,12 +78,12 @@ lin_col, bin_col = st.columns(2, border=True)
 with lin_col:
     st.header("Linear Search")
     lin_text = st.markdown("&nbsp;\n\n")
-    lin_sep = st.markdown("---")
+    # lin_sep = st.markdown("---")
     lin_footer = st.empty()
 with bin_col:
     st.header("Binary Search")
     bin_text = st.markdown("&nbsp;\n\n")
-    bin_sep = st.markdown("---")
+    # bin_sep = st.markdown("---")
     bin_footer = st.empty()
 
 with st.sidebar:
@@ -84,7 +126,6 @@ def construct_path_str(path_entries):
 if query:
     st.session_state['queries'].append(query)
     intro.empty()
-    intro.markdown(f"Your query is: **{query}**")
     word_index = lookup_word_lin(query)
     lin_steps = word_index + 1 if word_index > -1 else len(dict_entries)
     st.session_state['all_lin_steps'].append(lin_steps)
@@ -98,16 +139,17 @@ if query:
     st.session_state['all_bin_steps'].append(bin_steps)
     bin_path = " ➡️ ".join(bin_checks)
     if word_index > -1:
-        result.markdown(f"✅ Your word was **found**, at index **`{word_index}`**! It took...")
-        lin_text.markdown(f"**{word_index + 1} steps** to find the word:\n\n{lin_path_str}")
-        bin_text.markdown(f"**{bin_steps} steps** to find the word:\n\n{bin_path}")
+        result.markdown(f"Your query was: **{query}**... ✅ Your word was **found**, at index **`{word_index}`**! It took...")
+        lin_text.markdown(f"**{word_index + 1} steps** to find the word:\n\n<p class='small-font'>{lin_path_str}</p>", unsafe_allow_html=True)
+        bin_text.markdown(f"**{bin_steps} steps** to find the word:\n\n<p class='small-font'>{bin_path}</p>", unsafe_allow_html=True)
     else:
-        result.markdown(f"❌ Your word was not found! However, it took...")
+        result.markdown(f"Your query was: **{query}**... ❌ Your word was not found! However, it took...")
         lin_text.markdown(f"**`{len(dict_entries)}` steps** to find out that it was not in this dictionary 😳")
         bin_text.markdown(f"**`17` steps** to find out that it was not in this dictionary 😎")
-    lin_footer.markdown(round(sum(st.session_state['all_lin_steps']) / len(st.session_state['all_lin_steps']), 2))
-    arr = np.random.normal(1, 1, size=100)
-    fig, ax = plt.subplots()
-    ax.hist(arr, bins=20)
-    st.pyplot(fig)
-    bin_footer.markdown(round(sum(st.session_state['all_bin_steps']) / len(st.session_state['all_bin_steps']), 2))
+    mean_lin_steps = round(sum(st.session_state['all_lin_steps']) / len(st.session_state['all_lin_steps']), 2)
+    worst_lin_steps = max(st.session_state['all_lin_steps'])
+    lin_footer.markdown(f"Running average: **{mean_lin_steps} steps**\n\nWorst case: **{worst_lin_steps} steps**")
+    mean_bin_steps = round(sum(st.session_state['all_bin_steps']) / len(st.session_state['all_bin_steps']), 2)
+    bin_footer.markdown(f"Running average: **{mean_bin_steps} steps**")
+    step_ratio = round(mean_lin_steps / mean_bin_steps)
+    st.markdown(f"On average, binary search has worked **{step_ratio} times faster!**")
