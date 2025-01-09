@@ -8,11 +8,11 @@ import json
 st.logo("log_wide_crop.png", size="large")
 
 st.set_page_config(
-    page_title="Scaling Dictionary Lookup",
+    page_title="Part 2: Scalability",
     page_icon="📚",
 )
 
-st.title("📖 Dynamic Dictionary Lookup")
+st.title("📖 Part 2: Scalability")
 st.subheader("*How does our algorithm perform as the dictionary grows?*")
 
 if 'lookup_df' not in st.session_state:
@@ -83,6 +83,6 @@ if dict_size:
     #st.write(st.session_state['lookup_df'])
 
 fig, ax = plt.subplots()
-df_plot_fig = st.session_state['lookup_df'].set_index('n').plot().figure
+df_plot_fig = st.session_state['lookup_df'].set_index('n').plot(style='.-').figure
 st.pyplot(df_plot_fig)
 

@@ -7,11 +7,11 @@ import json
 st.logo("log_wide_crop.png", size="large")
 
 st.set_page_config(
-    page_title="Static Dictionary Lookup",
+    page_title="Part 1: Static Dictionary Lookup",
     page_icon="📖",
 )
 
-st.title("📖 Static Dictionary Lookup")
+st.title("📖 Part 1: Static Dictionary")
 st.subheader("*Linear vs. Logarithmic Time*")
 
 st.markdown(
