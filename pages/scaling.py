@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 rng = np.random.default_rng(seed=5500)
-import matplotlib.pyplot as plt
-import json
 
 st.logo("log_wide_crop.png", size="large")
 
@@ -82,7 +80,6 @@ if dict_size:
     st.session_state['lookup_df'] = pd.concat([st.session_state['lookup_df'], cur_data_df])
     #st.write(st.session_state['lookup_df'])
 
-fig, ax = plt.subplots()
 df_plot_fig = st.session_state['lookup_df'].set_index('n').plot(style='.-').figure
 st.pyplot(df_plot_fig)
 
