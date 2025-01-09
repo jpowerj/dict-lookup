@@ -79,7 +79,7 @@ if dict_size:
     cur_data_df = pd.DataFrame({'n': [dict_size], 'linear': [lin_mean_time], 'binary':[bin_mean_time]})
     #st.write(cur_data_df)
     # And append to the df
-    st.session_state['lookup_df'] = pd.concat([st.session_state['lookup_df'], cur_data_df], axis=0)
+    st.session_state['lookup_df'] = pd.concat([st.session_state['lookup_df'], cur_data_df])
     #st.write(st.session_state['lookup_df'])
 
 fig, ax = plt.subplots()
