@@ -80,6 +80,6 @@ if dict_size:
     st.session_state['lookup_df'] = pd.concat([st.session_state['lookup_df'], cur_data_df])
     #st.write(st.session_state['lookup_df'])
 
-df_plot_fig = st.session_state['lookup_df'].set_index('n').plot(style='.-').figure
+df_plot_fig = st.session_state['lookup_df'].sort_values(by='n').set_index('n').plot(style='.-').figure
 st.pyplot(df_plot_fig)
 
