@@ -74,12 +74,12 @@ result = st.empty()
 
 lin_col, bin_col = st.columns(2, border=True)
 with lin_col:
-    st.header("Linear Search")
+    st.markdown("#### Linear Search")
     lin_text = st.markdown("&nbsp;\n\n")
     # lin_sep = st.markdown("---")
     lin_footer = st.empty()
 with bin_col:
-    st.header("Binary Search")
+    st.markdown("#### Binary Search")
     bin_text = st.markdown("&nbsp;\n\n")
     # bin_sep = st.markdown("---")
     bin_footer = st.empty()
