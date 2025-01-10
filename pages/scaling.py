@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 rng = np.random.default_rng(seed=5500)
+import matplotlib.pyplot as plt
 
 st.logo("log_wide_crop.png", size="large")
 

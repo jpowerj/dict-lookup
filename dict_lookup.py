@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import matplotlib.pyplot as plt
 
 st.logo("log_wide_crop.png", size="large")
 
